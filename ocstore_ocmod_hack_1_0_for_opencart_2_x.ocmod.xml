@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>OC-Store: OCMOD Hack (Opencart 2.x)</name>
+    <version>1.0</version>
+    <author>Sergey Pechenyuk (http://oc-store.com)</author>
+	<link>http://oc-store.com</link>
+	<code>ocstore_ocmod_hack</code>
+	<file path="admin/controller/extension/modification.php">	
+		<operation>
+			<search><![CDATA[foreach ($operations as $operation) {]]></search>
+			<add position="after"><![CDATA[
+										$minversion = $operation->getAttribute('min-version');
+										if($minversion != "")
+											if(version_compare(VERSION, $minversion) < 0)
+												continue;
+
+										$maxversion = $operation->getAttribute('max-version');
+										if($maxversion != "")
+											if(version_compare(VERSION, $maxversion) > 0)
+												continue;
+			]]></add>
+		</operation>
+	</file>
+</modification>
