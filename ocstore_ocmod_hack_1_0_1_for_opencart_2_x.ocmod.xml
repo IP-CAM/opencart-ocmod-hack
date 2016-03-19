@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>OC-Store: OCMOD Hack (Opencart 2.x)</name>
+    <version>1.0.1</version>
+    <author>Sergey Pechenyuk (http://oc-store.com)</author>
+	<link>http://oc-store.com</link>
+	<code>ocstore_ocmod_hack</code>
+	<file path="admin/controller/extension/modification.php">	
+		<operation>
+			<search><![CDATA[foreach ($operations as $operation) {]]></search>
+			<add position="after"><![CDATA[
+										$minversion = $operation->getAttribute('min-version');
+										if($minversion != "")
+											if(version_compare(VERSION, $minversion) < 0)
+												continue;
+
+										$maxversion = $operation->getAttribute('max-version');
+										if($maxversion != "")
+											if(version_compare(VERSION, $maxversion) > 0)
+												continue;
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search><![CDATA[protected function validate() {]]></search>
+			<add position="before"><![CDATA[
+				private function preg_replace_nth($pattern, $replacement, $subject, $nth=1) {
+					return preg_replace_callback($pattern,
+						function($found) use (&$pattern, &$replacement, &$nth) {
+								$nth--;
+								if ($nth==0) return preg_replace($pattern, $replacement, reset($found) );
+								return reset($found);
+						}, $subject, $nth);
+				}
+			]]></add>
+		</operation>
+		
+		<operation>
+			<search><![CDATA[$match = array();]]></search>
+			<add position="after"><![CDATA[
+				$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
+				
+				// Check if using indexes
+				if ($index !== '') {
+					$indexes = explode(',', $index);
+				} else {
+					$indexes = array();
+				}
+
+				if ($indexes !== array()):
+					foreach ($indexes as $i):
+						$modification[$key] = $this->preg_replace_nth($search, $replace, $modification[$key], $i);   
+					endforeach;
+				else:
+			]]></add>
+		</operation>
+		
+		
+		<operation>
+			<search><![CDATA[$modification[$key] = preg_replace($search, $replace, $modification[$key], $limit);]]></search>
+			<add position="after"><![CDATA[
+				endif;
+			]]></add>
+		</operation>
+	</file>
+</modification>
