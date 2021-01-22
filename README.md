@@ -1,13 +1,13 @@
 # opencart-ocmod-hack
 
-Хак для Opencart 2.x, который добавляет функционал применения модификаций по версии Opencart в OCMOD.
+A hack for Opencart 2.x that adds the functionality of applying modifications according to the Opencart version to OCMOD.
 
-Для примера, в Opencart 2.1.x в системной библиотеке language.php есть такой замечательный метод all(), который отдает все значения языкового файла, но данного метода нет в Opencart 2.0.x. Вот тут нам и может помочь этот модуль, который вводит для XML-тега "operation" два новых аттрибута:
-* min-version - минимальная версия Opencart, для которой применяется данная модификация
-* max-version - максимальная версия Opencart, для которой применяется данная модификация
+For example, in Opencart 2.1.x in the system library language.php there is such a wonderful method all () that returns all the values ​​of the language file, but this method is not in Opencart 2.0.x. This is where this module can help us, which introduces two new attributes for the "operation" XML tag:
 
-Пример Вашего файла install.xml, который вносит изменения в системную библиотеку language.php, чтобы был доступен метод all() на Opencart 2.0.x
-```
+    min-version - minimum Opencart version for which this modification applies
+    max-version - maximum version of Opencart for which this modification applies
+
+An example of your install.xml file, which makes changes to the system library language.php so that the all () method is available on Opencart 2.0.x```
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
     <name>Add language method all() for Opencart 2.0.x</name>
