@@ -7,7 +7,8 @@ For example, in Opencart 2.1.x in the system library language.php there is such 
     min-version - minimum Opencart version for which this modification applies
     max-version - maximum version of Opencart for which this modification applies
 
-An example of your install.xml file, which makes changes to the system library language.php so that the all () method is available on Opencart 2.0.x```
+An example of your install.xml file, which makes changes to the system library language.php so that the all () method is available on Opencart 2.0.x
+
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
     <name>Add language method all() for Opencart 2.0.x</name>
@@ -25,4 +26,3 @@ An example of your install.xml file, which makes changes to the system library l
 		  </operation>
 	  </file>
 </modification>
-```
